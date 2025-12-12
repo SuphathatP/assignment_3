@@ -11,7 +11,7 @@ public:
 	float rotation;
 	int radius;
 
-	virtual void draw();
+	virtual void draw() = 0;
 	virtual void simulatePhysics(float elapsedTime);
 	virtual void collisions(Rigidbody* other);
 

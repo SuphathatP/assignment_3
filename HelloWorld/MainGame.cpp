@@ -2,18 +2,44 @@
 #define PLAY_USING_GAMEOBJECT_MANAGER
 #include "Play.h"
 #include "constants.h"
+#include "game.h"
+
+#include "rigidbody.h"
+#include "ship.h"
+#include "asteroid.h"
+
+// currently = 1 (ship)
+constexpr int NUM_RIGIDBODIES = 1; // evaluated at compile time???? https://www.geeksforgeeks.org/cpp/understanding-constexper-specifier-in-cpp/
+Rigidbody** rigidbody = nullptr;
 
 // The entry point for a PlayBuffer program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 {
 	Play::CreateManager( DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_SCALE );
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	
+	// Center sprite origins!!!!!!
+	Play::CentreAllSpriteOrigins();
+
+	// Allocate array and objects
+	rigidbody = new Rigidbody * [NUM_RIGIDBODIES];
+	rigidbody[0] = new Ship();
 }
 
 // Called by PlayBuffer every frame (60 times a second!)
 bool MainGameUpdate( float elapsedTime )
 {
 	Play::ClearDrawingBuffer( Play::cBlack );
-	Play::DrawDebugText( { DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 }, "Asteroids :)" );
+
+	// Update and draw all rigid bodies (polymorphic ?? not sure)
+	for (int i = 0; i < NUM_RIGIDBODIES; ++i)
+	{
+		rigidbody[i]->simulatePhysics(elapsedTime);
+		rigidbody[i]->draw();
+	}
+
+	Play::DrawDebugText( { DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 - 200 }, "Asteroid by nEwNEwnEW and Johan the carrot :)" );
+	
 	Play::PresentDrawingBuffer();
 	return Play::KeyDown( KEY_ESCAPE );
 }
@@ -21,6 +47,15 @@ bool MainGameUpdate( float elapsedTime )
 // Gets called once when the player quits the game 
 int MainGameExit( void )
 {
+	// Clean up
+	if (rigidbody)
+	{
+		for (int i = 0; i < NUM_RIGIDBODIES; ++i)
+			delete rigidbody[i];
+		delete[] rigidbody;
+		rigidbody = nullptr;
+	}
+
 	Play::DestroyManager();
 	return PLAY_OK;
 }

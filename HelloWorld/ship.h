@@ -4,6 +4,15 @@
 
 class Ship : public Rigidbody
 {
-	float thrust;
-	int spriteId;
+public:
+	Ship();
+
+	// Rigidbody overrides
+	void draw() override;
+	void simulatePhysics(float elapsedTime) override;
+	void collisions(Rigidbody* other) override;
+
+	float shipThrust;
+	float shipRotationSpeed;
+	int shipID;
 };
