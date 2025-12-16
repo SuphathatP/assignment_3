@@ -55,5 +55,5 @@ void Asteroid::draw()
 
 void Asteroid::on_collision(Rigidbody* other)
 {
-	(void)other; // Will come back to this or forcing Johan to doing this
+	//(void)other; // Will come back to this or forcing Johan to doing this
 }

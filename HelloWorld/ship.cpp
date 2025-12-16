@@ -24,7 +24,7 @@ Ship::Ship()
 	// Collision radius
 	int spriteWidth = Play::GetSpriteWidth(shipID);
 	int spriteHeight = Play::GetSpriteHeight(shipID);
-	radius = static_cast<int>((std::max(width, height) * 0.5f));
+	radius = static_cast<int>((std::max(spriteWidth, spriteHeight) * 0.5f));
 }
 
 void Ship::simulatePhysics(float elapsedTime)
@@ -65,12 +65,11 @@ void Ship::on_collision(Rigidbody* other)
 {
 	// (void)other; // Not finished, forcing Johan to doing this :p
 	bool check = (
-		(position.x - other->position.x) * (position.x - other->position.x) // (p.x-q.x)^{2}
-		+ (position.y - other->position.y) * (position.y - other->position.y) // (p.y-q.y)^{2}
-		)
-		< this->radius + other->radius;
+		(this->position.x - other->position.x) * (this->position.x - other->position.x) // (p.x-q.x)^{2}
+		+ (this->position.y - other->position.y) * (this->position.y - other->position.y) // (p.y-q.y)^{2}
+		)< this->radius * this->radius + other->radius * other->radius;
 	if (check) {
-		reset();
+		this->reset();
 	}
 }
 
