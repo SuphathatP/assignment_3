@@ -53,7 +53,7 @@ void Asteroid::draw()
 	Play::DrawSpriteRotated(asteroidID, position, 0, rotation, scale);
 }
 
-void Asteroid::collisions(Rigidbody* other)
+void Asteroid::on_collision(Rigidbody* other)
 {
 	(void)other; // Will come back to this or forcing Johan to doing this
 }

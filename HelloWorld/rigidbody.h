@@ -13,6 +13,6 @@ public:
 
 	virtual void draw() = 0;
 	virtual void simulatePhysics(float elapsedTime);
-	virtual void collisions(Rigidbody* other);
+	virtual void on_collision(Rigidbody* other);
 
 };

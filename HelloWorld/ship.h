@@ -4,13 +4,14 @@
 
 class Ship : public Rigidbody
 {
+	void reset();
 public:
 	Ship();
 
 	// Rigidbody overrides
 	void draw() override;
 	void simulatePhysics(float elapsedTime) override;
-	void collisions(Rigidbody* other) override;
+	void on_collision(Rigidbody* other) override;
 
 	float shipThrust;
 	float shipRotationSpeed;

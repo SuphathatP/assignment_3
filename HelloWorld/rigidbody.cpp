@@ -21,7 +21,7 @@ void Rigidbody::simulatePhysics(float elapsedTime)
 	else if (position.y > height) position.y -= height;
 }
 
-void Rigidbody::collisions(Rigidbody* other)
+void Rigidbody::on_collision(Rigidbody* other)
 {
 	(void)other;
 }

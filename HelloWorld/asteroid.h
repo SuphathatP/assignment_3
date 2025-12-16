@@ -10,7 +10,7 @@ public:
 	// Rigidbody overrides
 	void draw() override;
 	void simulatePhysics(float elapsedTime) override;
-	void collisions(Rigidbody* other) override;
+	void on_collision(Rigidbody* other) override;
 
 	float scale;
 	float rotationSpeed;

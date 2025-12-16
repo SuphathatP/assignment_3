@@ -1,6 +1,16 @@
 #include "ship.h"
 #include "asteroid.h"
 
+void Ship::reset() {
+	// Start at center of the screen
+	position.x = static_cast<float>(DISPLAY_WIDTH) * 0.5f;
+	position.y = static_cast<float>(DISPLAY_HEIGHT) * 0.5f;
+
+	velocity.x = velocity.y = 0.0f;
+	acceleration.x = acceleration.y = 0.0f;
+	rotation = 0.0f;
+}
+
 Ship::Ship()
 {
 	// Get sprite ID
@@ -9,13 +19,7 @@ Ship::Ship()
 	shipThrust = 400.0f;
 	shipRotationSpeed = 4.0f;
 
-	// Start at center of the screen
-	position.x = static_cast<float>(DISPLAY_WIDTH) * 0.5f;
-	position.y = static_cast<float>(DISPLAY_HEIGHT) * 0.5f;
-
-	velocity.x = velocity.y = 0.0f;
-	acceleration.x = acceleration.y = 0.0f;
-	rotation = 0.0f;
+	this->reset();
 
 	// Collision radius
 	int spriteWidth = Play::GetSpriteWidth(shipID);
@@ -30,7 +34,7 @@ void Ship::simulatePhysics(float elapsedTime)
 	{
 		rotation += shipRotationSpeed * elapsedTime;
 	}
-	
+
 	if (Play::KeyDown(Play::KEY_RIGHT) || Play::KeyDown(Play::KEY_D))
 	{
 		rotation -= shipRotationSpeed * elapsedTime;
@@ -57,9 +61,17 @@ void Ship::draw()
 	Play::DrawSpriteRotated(shipID, position, 0, rotation, 1.0f);
 }
 
-void Ship::collisions(Rigidbody* other)
+void Ship::on_collision(Rigidbody* other)
 {
-	(void)other; // Not finished may forcing Johan to doing this :p
+	// (void)other; // Not finished, forcing Johan to doing this :p
+	bool check = (
+		(position.x - other->position.x) * (position.x - other->position.x) // (p.x-q.x)^{2}
+		+ (position.y - other->position.y) * (position.y - other->position.y) // (p.y-q.y)^{2}
+		)
+		< this->radius + other->radius;
+	if (check) {
+		reset();
+	}
 }
 
 /*	Note: The fmod() function returns the floating point remainder of the division dividend / divisor where the result of the division is truncated(the decimal part is removed).

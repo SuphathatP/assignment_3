@@ -36,11 +36,18 @@ bool MainGameUpdate( float elapsedTime )
 {
 	Play::ClearDrawingBuffer( Play::cBlack );
 
-	// Update and draw all rigid bodies (polymorphic ?? not sure)
-	for (int i = 0; i < NUM_RIGIDBODIES; ++i)
+	// Update and draw all rigid bodies (polymorphic ?? not sure) // I don't think so?
+	for (int i = 0; i < NUM_RIGIDBODIES; i++)
 	{
 		rigidbody[i]->simulatePhysics(elapsedTime);
 		rigidbody[i]->draw();
+
+		for (int j = 0; j < NUM_RIGIDBODIES; j++)
+		{
+			if (i != j) {
+				rigidbody[i]->on_collision(rigidbody[j]);
+			}
+		}
 	}
 
 	Play::DrawDebugText( { DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 - 200 }, "Asteroid by nEwNEwnEW and Johan the carrot :)" );
