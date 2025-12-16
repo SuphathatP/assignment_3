@@ -22,8 +22,8 @@ Asteroid::Asteroid()
 	position.y = randRange(0.0f, static_cast<float>(DISPLAY_HEIGHT));
 
 	// Random velocity
-	position.x = randRange(minVelocity, maxVelocity);
-	position.y = randRange(minVelocity, maxVelocity);
+	velocity.x = randRange(minVelocity, maxVelocity);
+	velocity.y = randRange(minVelocity, maxVelocity);
 
 	// No acceleration spawn
 	acceleration.x = 0.0f;

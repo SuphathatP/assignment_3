@@ -10,9 +10,9 @@ const int DISPLAY_SCALE = 1;
 const float width = static_cast<float>(DISPLAY_WIDTH);
 const float height = static_cast<float>(DISPLAY_HEIGHT);
 
-// Value
+// Asteroid Value
 const float minScale = 0.5f;
-const float maxScale = 1.5f;
+const float maxScale = 5.0f;
 const float minRotationSpeed = -2.0f;
 const float maxRotationSpeed = 2.0f;
 const float minVelocity = -150.0f;

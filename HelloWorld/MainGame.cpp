@@ -9,7 +9,7 @@
 #include "asteroid.h"
 
 // currently = 1 (ship)
-constexpr int NUM_RIGIDBODIES = 1; // evaluated at compile time???? https://www.geeksforgeeks.org/cpp/understanding-constexper-specifier-in-cpp/
+constexpr int NUM_RIGIDBODIES = 12; // evaluated at compile time???? https://www.geeksforgeeks.org/cpp/understanding-constexper-specifier-in-cpp/
 Rigidbody** rigidbody = nullptr;
 
 // The entry point for a PlayBuffer program
@@ -24,6 +24,11 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	// Allocate array and objects
 	rigidbody = new Rigidbody * [NUM_RIGIDBODIES];
 	rigidbody[0] = new Ship();
+
+	for (int i = 1; i < NUM_RIGIDBODIES; i++)
+	{
+		rigidbody[i] = new Asteroid();
+	}
 }
 
 // Called by PlayBuffer every frame (60 times a second!)
